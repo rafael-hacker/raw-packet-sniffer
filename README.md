@@ -9,14 +9,15 @@ and sockaddr_ll to avoid segmentation faults in the logging system implemented w
     cd raw-packet-sniffer
     make
 ## 📁 Project structure
-    raw-packet-sniffer/
-        *Makefile*
-        src/
-            *sniffer.cpp*
-        libs/
-            *defines.h*
-        bin/
-            *net*
+    ├── LICENSE
+├── Makefile
+├── README.md
+├── bin
+│   └── net
+├── libs
+│   └── defines.h
+└── src
+    └── sniffer.cpp
 
 ## license 
     Distributed under MIT license. Read LICENSE for details
