@@ -8,3 +8,4 @@ all:
 	$(CC) $(ASFLAGS) $(SRC) -o $(BIN)
 clean:
 	rm -rf $(BIN)
+	rm -rf bin

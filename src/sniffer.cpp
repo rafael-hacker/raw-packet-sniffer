@@ -1,3 +1,4 @@
+#include <csignal>
 #include "../libs/defines.h"
 #include <iostream>
 #include <linux/if_packet.h>
@@ -7,7 +8,6 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <linux/if_ether.h>
-
 
 int sniff(){
     int socketfd = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
@@ -66,6 +66,7 @@ int sniff(){
 }
 
 int main(){
+    std::signal(SIGINT, [](int sig){exit(0);});
     sniff();
     return 0;
 }
