@@ -1,3 +1,4 @@
+#include "../libs/defines.h"
 #include <iostream>
 #include <linux/if_packet.h>
 #include <fstream>
@@ -16,7 +17,7 @@ int sniff(){
         std::cerr << "error: failed to open Socket, USAGE: sudo ./net\n";
         return 1;
     }
-    std::ofstream file("logs.txt");
+    std::ofstream file("logs.txt", std::ios::app);
 
     if(!file){
         std::cerr <<"Failed to create logs.pcap"<< std::endl;
@@ -30,7 +31,35 @@ int sniff(){
             std::cerr << "error: failed to read socket "<< std::endl;
             return 1;
         }
+        
         file << "the dest Ip address is: " << inet_ntoa(*(struct in_addr *)&buffer[30]) <<  std::endl;
+        switch(buffer[23]){
+            case TCP:
+                file << "service is TCP\n";
+                break;
+            case UDP:
+                file << "service is UDP\n";
+                break;
+            case ICMP:
+                file << "service is ICMP\n";
+                break;
+            case GRE:
+                file << "service is GRE\n";
+                break;
+            case IGMP:
+                file << "service is IGMP\n";
+                break;
+            case ESP:
+                file << "service is ESP\n";
+                break;
+            case OSPF:
+                file << "service is OSPF\n";
+                break;
+            default:
+                file << "unlisted service\n";
+                return 1;
+            
+        }
     }
 
     return 0;
