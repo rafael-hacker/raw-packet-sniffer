@@ -21,3 +21,6 @@ and sockaddr_ll to avoid segmentation faults in the logging system implemented w
     └── sniffer.cpp
 
 ```
+
+📜 MIT License
+Free to break, modify and burn however you wish.
