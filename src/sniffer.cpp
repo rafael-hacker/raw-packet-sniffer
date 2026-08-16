@@ -9,6 +9,8 @@
 #include <arpa/inet.h>
 #include <linux/if_ether.h>
 
+volatile sig_atomic_t running = true;
+
 int sniff(){
     int socketfd = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
     struct sockaddr_ll sniffaddr;
@@ -25,7 +27,7 @@ int sniff(){
     }
     
     char buffer[2048];
-    while (true) {
+    while (running) {
         int sockfd = recvfrom(socketfd, buffer, sizeof(buffer), 0, (struct sockaddr *)&sniffaddr, &addrlen);
         if(sockfd < 0){
             std::cerr << "error: failed to read socket "<< std::endl;
@@ -36,13 +38,14 @@ int sniff(){
 
         file << "the source IP address is : " << inet_ntoa(*(struct in_addr *)&buffer[26]) << std::endl;      
         file << "the dest Ip address is: " << inet_ntoa(*(struct in_addr *)&buffer[30]) <<  std::endl;
-
+        
         switch(buffer[23]){
             case TCP:
                 file << "service is TCP\n" << "the dest PORT is: " << ntohs(*(uint16_t *)&buffer[next_init + 2]) << "\n" << "the source PORT is " << ntohs(*(uint16_t *)&buffer[next_init]) << "\n";
+                
                 break;
             case UDP:
-                file << "service is UDP\n" << "the dest PORT is: "<<ntohs(*(uint16_t *)&buffer[next_init + 2]) << "\n" << "the source PORT is: " << ntohs(*(uint16_t *)&buffer[next_init]) << "\n";
+                file << "service is UDP\n" << "the dest PORT is: "<<ntohs(*(uint16_t *)&buffer[next_init + 2]) << "\n" << "the source PORT is: " << ntohs(*(uint16_t *)&buffer[next_init]) <<"\n";
                 break;
             case ICMP:
                 file << "service is ICMP\n";
@@ -69,7 +72,7 @@ int sniff(){
 }
 
 int main(){
-    std::signal(SIGINT, [](int sig){exit(0);});
+    std::signal(SIGINT, [](int sig){running = false;});
     sniff();
     return 0;
 }
