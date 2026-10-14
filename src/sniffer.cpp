@@ -1,5 +1,5 @@
 #include <csignal>
-#include "../libs/defines.h"
+#include "../libs/protocols.hpp"
 #include <iostream>
 #include <linux/if_packet.h>
 #include <fstream>
@@ -21,7 +21,7 @@ int sniff(){
     }
     std::ofstream file("logs.txt", std::ios::app);
 
-    if(!file){
+    if(!file.is_open()){
         std::cerr <<"Failed to create logs.pcap"<< std::endl;
         return 1;
     }

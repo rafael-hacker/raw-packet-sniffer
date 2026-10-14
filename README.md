@@ -7,9 +7,8 @@ and sockaddr_ll to avoid segmentation faults in the logging system implemented w
 ## Build & usage
     git clone https://github.com/rafael-hacker/raw-packet-sniffer.git
     cd raw-packet-sniffer
-    make
-    cd bin
-    sudo ./net
+    cmake -B build ; cmake --build build
+    cd build ; sudo ./raw_sniffer    
 
 ## 📁 Project structure
 ```text
