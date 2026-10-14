@@ -6,5 +6,5 @@ with open("logs.txt", "r") as Log_File:
     if pos != -1:
         print(content[pos:pos+10])
     else:
-        print(f"Failure to find {searcher}")
+        print(f"Failure to find [{searcher}]")
 
