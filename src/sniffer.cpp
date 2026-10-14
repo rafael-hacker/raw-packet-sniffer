@@ -16,7 +16,7 @@ int sniff(){
     struct sockaddr_ll sniffaddr;
     socklen_t addrlen = sizeof(sniffaddr); 
     if (socketfd < 0){
-        std::cerr << "error: failed to open Socket, USAGE: sudo ./net\n";
+        std::cerr << "error: failed to open Socket, USAGE: sudo ./raw_sniffer\n";
         return 1;
     }
     std::ofstream file("logs.txt", std::ios::app);
